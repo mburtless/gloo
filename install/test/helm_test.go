@@ -805,7 +805,6 @@ var _ = Describe("Helm Test", func() {
 				It("should set stats_tags in gateway-proxy-envoy-config from gatewayProxies.gatewayProxy", func() {
 					prepareMakefile(namespace, helmValues{
 						valuesArgs: []string{
-							//"gatewayProxies.gatewayProxy.stats.statsTags=[{\"tagName\":\"value\",\"regex\":\"'(_value=([a-zA-Z]+))'\"}]",
 							"gatewayProxies.gatewayProxy.stats.statsTags[0].tagName=foo",
 							"gatewayProxies.gatewayProxy.stats.statsTags[0].fixedValue=bar",
 							"gatewayProxies.gatewayProxy.stats.statsTags[0].regex='(_value=([a-zA-Z]+))'",
