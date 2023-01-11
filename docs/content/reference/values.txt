@@ -128,9 +128,9 @@
 |gloo.deployment.stats.statsPrefixRewrite|string||The Envoy stats endpoint with general metrics for the additional stats route|
 |gloo.deployment.stats.serviceMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Service Monitor. Requires that 'enabled' is also true|
 |gloo.deployment.stats.podMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Pod Monitor. Requires that 'enabled' is also true|
-|gloo.deployment.floatingUserId|bool||If true, allows the cluster to dynamically assign a user ID for the processes running in the container. If a SecurityContext is defined for the container, this value is not applied for the container.|
-|gloo.deployment.runAsUser|float64||Explicitly set the user ID for the processes in the container to run as. Default is 10101. If a SecurityContext is defined for the pod or container, this value is not applied for the pod/container.|
-|gloo.deployment.externalTrafficPolicy|string||Set the external traffic policy on the gloo service.|
+|gloo.deployment.stats.statsTags[].tagName|string||Attaches an identifier to the tag values to identify the tag being in the sink|
+|gloo.deployment.stats.statsTags[].regex|string||Designates a tag to strip from the tag extracted name and provide as a named tag value for all statistics|
+|gloo.deployment.stats.statsTags[].fixedValue|string||Specifies a fixed tag value for the TagName|
 |gloo.deployment.extraGlooLabels.NAME|string||Optional extra key-value pairs to add to the spec.template.metadata.labels data of the primary gloo deployment.|
 |gloo.deployment.extraGlooAnnotations.NAME|string||Optional extra key-value pairs to add to the spec.template.metadata.annotations data of the primary gloo deployment.|
 |gloo.deployment.livenessProbeEnabled|bool||Set to true to enable a liveness probe for Gloo Edge (default is false).|
@@ -241,6 +241,9 @@
 |discovery.deployment.stats.statsPrefixRewrite|string||The Envoy stats endpoint with general metrics for the additional stats route|
 |discovery.deployment.stats.serviceMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Service Monitor. Requires that 'enabled' is also true|
 |discovery.deployment.stats.podMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Pod Monitor. Requires that 'enabled' is also true|
+|discovery.deployment.stats.statsTags[].tagName|string||Attaches an identifier to the tag values to identify the tag being in the sink|
+|discovery.deployment.stats.statsTags[].regex|string||Designates a tag to strip from the tag extracted name and provide as a named tag value for all statistics|
+|discovery.deployment.stats.statsTags[].fixedValue|string||Specifies a fixed tag value for the TagName|
 |discovery.deployment.floatingUserId|bool||If true, allows the cluster to dynamically assign a user ID for the processes running in the container.|
 |discovery.deployment.runAsUser|float64||Explicitly set the user ID for the processes in the container to run as. Default is 10101.|
 |discovery.deployment.fsGroup|float64||Explicitly set the group ID for volume ownership. Default is 10101|
@@ -637,6 +640,9 @@
 |gatewayProxies.NAME.stats.statsPrefixRewrite|string||The Envoy stats endpoint with general metrics for the additional stats route|
 |gatewayProxies.NAME.stats.serviceMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Service Monitor. Requires that 'enabled' is also true|
 |gatewayProxies.NAME.stats.podMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Pod Monitor. Requires that 'enabled' is also true|
+|gatewayProxies.NAME.stats.statsTags[].tagName|string||Attaches an identifier to the tag values to identify the tag being in the sink|
+|gatewayProxies.NAME.stats.statsTags[].regex|string||Designates a tag to strip from the tag extracted name and provide as a named tag value for all statistics|
+|gatewayProxies.NAME.stats.statsTags[].fixedValue|string||Specifies a fixed tag value for the TagName|
 |gatewayProxies.NAME.readConfig|bool||expose a read-only subset of the Envoy admin api|
 |gatewayProxies.NAME.readConfigMulticluster|bool||expose a read-only subset of the Envoy admin api to gloo-fed|
 |gatewayProxies.NAME.extraProxyVolumeMounts[].NAME|interface|||
@@ -874,6 +880,9 @@
 |gatewayProxies.gatewayProxy.stats.statsPrefixRewrite|string||The Envoy stats endpoint with general metrics for the additional stats route|
 |gatewayProxies.gatewayProxy.stats.serviceMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Service Monitor. Requires that 'enabled' is also true|
 |gatewayProxies.gatewayProxy.stats.podMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Pod Monitor. Requires that 'enabled' is also true|
+|gatewayProxies.gatewayProxy.stats.statsTags[].tagName|string||Attaches an identifier to the tag values to identify the tag being in the sink|
+|gatewayProxies.gatewayProxy.stats.statsTags[].regex|string||Designates a tag to strip from the tag extracted name and provide as a named tag value for all statistics|
+|gatewayProxies.gatewayProxy.stats.statsTags[].fixedValue|string||Specifies a fixed tag value for the TagName|
 |gatewayProxies.gatewayProxy.readConfig|bool||expose a read-only subset of the Envoy admin api|
 |gatewayProxies.gatewayProxy.readConfigMulticluster|bool||expose a read-only subset of the Envoy admin api to gloo-fed|
 |gatewayProxies.gatewayProxy.extraProxyVolumeMounts[].NAME|interface|||
@@ -1052,6 +1061,9 @@
 |accessLogger.stats.statsPrefixRewrite|string||The Envoy stats endpoint with general metrics for the additional stats route|
 |accessLogger.stats.serviceMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Service Monitor. Requires that 'enabled' is also true|
 |accessLogger.stats.podMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Pod Monitor. Requires that 'enabled' is also true|
+|accessLogger.stats.statsTags[].tagName|string||Attaches an identifier to the tag values to identify the tag being in the sink|
+|accessLogger.stats.statsTags[].regex|string||Designates a tag to strip from the tag extracted name and provide as a named tag value for all statistics|
+|accessLogger.stats.statsTags[].fixedValue|string||Specifies a fixed tag value for the TagName|
 |accessLogger.runAsUser|float64||Explicitly set the user ID for the processes in the container to run as. Default is 10101.|
 |accessLogger.fsGroup|float64||Explicitly set the group ID for volume ownership. Default is 10101|
 |accessLogger.extraAccessLoggerLabels.NAME|string||Optional extra key-value pairs to add to the spec.template.metadata.labels data of the access logger deployment.|
@@ -1115,6 +1127,9 @@
 |global.glooStats.statsPrefixRewrite|string|/stats|The Envoy stats endpoint with general metrics for the additional stats route|
 |global.glooStats.serviceMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Service Monitor. Requires that 'enabled' is also true|
 |global.glooStats.podMonitorEnabled|bool||Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Pod Monitor. Requires that 'enabled' is also true|
+|global.glooStats.statsTags[].tagName|string||Attaches an identifier to the tag values to identify the tag being in the sink|
+|global.glooStats.statsTags[].regex|string||Designates a tag to strip from the tag extracted name and provide as a named tag value for all statistics|
+|global.glooStats.statsTags[].fixedValue|string||Specifies a fixed tag value for the TagName|
 |global.glooMtls.enabled|bool|false|Enables internal mtls authentication|
 |global.glooMtls.sds.image.tag|string|<release_version, ex: 1.2.3>|The image tag for the container.|
 |global.glooMtls.sds.image.repository|string|sds|The image repository (name) for the container.|

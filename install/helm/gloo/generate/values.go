@@ -634,13 +634,20 @@ type K8s struct {
 }
 
 type Stats struct {
-	Enabled               *bool   `json:"enabled,omitempty" desc:"Controls whether or not Envoy stats are enabled"`
-	RoutePrefixRewrite    *string `json:"routePrefixRewrite,omitempty" desc:"The Envoy stats endpoint to which the metrics are written"`
-	SetDatadogAnnotations *bool   `json:"setDatadogAnnotations,omitempty" desc:"Sets the default datadog annotations"`
-	EnableStatsRoute      *bool   `json:"enableStatsRoute,omitempty" desc:"Enables an additional route to the stats cluster defaulting to /stats"`
-	StatsPrefixRewrite    *string `json:"statsPrefixRewrite,omitempty" desc:"The Envoy stats endpoint with general metrics for the additional stats route"`
-	ServiceMonitorEnabled *bool   `json:"serviceMonitorEnabled,omitempty" desc:"Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Service Monitor. Requires that 'enabled' is also true"`
-	PodMonitorEnabled     *bool   `json:"podMonitorEnabled,omitempty" desc:"Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Pod Monitor. Requires that 'enabled' is also true"`
+	Enabled               *bool           `json:"enabled,omitempty" desc:"Controls whether or not Envoy stats are enabled"`
+	RoutePrefixRewrite    *string         `json:"routePrefixRewrite,omitempty" desc:"The Envoy stats endpoint to which the metrics are written"`
+	SetDatadogAnnotations *bool           `json:"setDatadogAnnotations,omitempty" desc:"Sets the default datadog annotations"`
+	EnableStatsRoute      *bool           `json:"enableStatsRoute,omitempty" desc:"Enables an additional route to the stats cluster defaulting to /stats"`
+	StatsPrefixRewrite    *string         `json:"statsPrefixRewrite,omitempty" desc:"The Envoy stats endpoint with general metrics for the additional stats route"`
+	ServiceMonitorEnabled *bool           `json:"serviceMonitorEnabled,omitempty" desc:"Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Service Monitor. Requires that 'enabled' is also true"`
+	PodMonitorEnabled     *bool           `json:"podMonitorEnabled,omitempty" desc:"Whether or not to expose an http-monitoring port that can be scraped by a Prometheus Pod Monitor. Requires that 'enabled' is also true"`
+	StatsTags             []*TagSpecifier `json:"statsTags,omitempty" desc:"Each stat name is independently processed through these tag specifiers"`
+}
+
+type TagSpecifier struct {
+	TagName    *string `json:"tagName,omitempty" desc:"Attaches an identifier to the tag values to identify the tag being in the sink"`
+	Regex      *string `json:"regex,omitempty" desc:"Designates a tag to strip from the tag extracted name and provide as a named tag value for all statistics"`
+	FixedValue *string `json:"fixedValue,omitempty" desc:"Specifies a fixed tag value for the TagName"`
 }
 
 type Mtls struct {

@@ -802,6 +802,35 @@ var _ = Describe("Helm Test", func() {
 					})
 				})
 
+				It("should set stats_tags in gateway-proxy-envoy-config from gatewayProxies.gatewayProxy", func() {
+					prepareMakefile(namespace, helmValues{
+						valuesArgs: []string{
+							//"gatewayProxies.gatewayProxy.stats.statsTags=[{\"tagName\":\"value\",\"regex\":\"'(_value=([a-zA-Z]+))'\"}]",
+							"gatewayProxies.gatewayProxy.stats.statsTags[0].tagName=foo",
+							"gatewayProxies.gatewayProxy.stats.statsTags[0].fixedValue=bar",
+							"gatewayProxies.gatewayProxy.stats.statsTags[0].regex='(_value=([a-zA-Z]+))'",
+						},
+					})
+
+					testManifest.SelectResources(func(resource *unstructured.Unstructured) bool {
+						return resource.GetKind() == "ConfigMap"
+					}).ExpectAll(func(configMap *unstructured.Unstructured) {
+						configMapObject, err := kuberesource.ConvertUnstructured(configMap)
+						Expect(err).NotTo(HaveOccurred(), fmt.Sprintf("ConfigMap %+v should be able to convert from unstructured", configMap))
+						structuredConfigMap, ok := configMapObject.(*v1.ConfigMap)
+						Expect(ok).To(BeTrue(), fmt.Sprintf("ConfigMap %+v should be able to cast to a structured config map", configMap))
+
+						if structuredConfigMap.GetName() == "gateway-proxy-envoy-config" {
+							expectedTagName := "tag_name: foo"
+							expectedFixedValue := "fixed_value: bar"
+							expectedRegex := "regex: '(_value=([a-zA-Z]+))'"
+							Expect(structuredConfigMap.Data["envoy.yaml"]).To(ContainSubstring(expectedTagName))
+							Expect(structuredConfigMap.Data["envoy.yaml"]).To(ContainSubstring(expectedFixedValue))
+							Expect(structuredConfigMap.Data["envoy.yaml"]).To(ContainSubstring(expectedRegex))
+						}
+					})
+				})
+
 				It("Should have 'pre-install' and 'pre-upgrade' hook if gateway.certGenJob.runOnUpdate is true", func() {
 					prepareMakefile(namespace, helmValues{
 						valuesArgs: []string{
