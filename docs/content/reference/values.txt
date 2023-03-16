@@ -131,6 +131,9 @@
 |gloo.deployment.stats.statsTags[].tagName|string||Attaches an identifier to the tag values to identify the tag being in the sink|
 |gloo.deployment.stats.statsTags[].regex|string||Designates a tag to strip from the tag extracted name and provide as a named tag value for all statistics|
 |gloo.deployment.stats.statsTags[].fixedValue|string||Specifies a fixed tag value for the TagName|
+|gloo.deployment.floatingUserId|bool||If true, allows the cluster to dynamically assign a user ID for the processes running in the container.|
+|gloo.deployment.runAsUser|float64||Explicitly set the user ID for the processes in the container to run as. Default is 10101.|
+|gloo.deployment.externalTrafficPolicy|string||Set the external traffic policy on the gloo service|
 |gloo.deployment.extraGlooLabels.NAME|string||Optional extra key-value pairs to add to the spec.template.metadata.labels data of the primary gloo deployment.|
 |gloo.deployment.extraGlooAnnotations.NAME|string||Optional extra key-value pairs to add to the spec.template.metadata.annotations data of the primary gloo deployment.|
 |gloo.deployment.livenessProbeEnabled|bool||Set to true to enable a liveness probe for Gloo Edge (default is false).|
